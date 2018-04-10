@@ -1,0 +1,24 @@
+fonctionnement de mon générateur de nombres aléatoires:
+1) Je récupère le temps écoulé depuis ma date de naissance, à l'instant t ou
+l'utilisateur demandera un nombre aléatoire.
+
+2) Ensuite, j'utilise le nombre de microsecondes écoulées depuis ma date de naissance
+pour avoir un tableau de 10 indices entre 0 et 999999.
+
+3)randomIntList(n)
+	-Je crée une liste de n nombres random entre 0 et 9
+	-J'ai mes 10 indices, pour chaque indices, j'ajoute la décimale de pi
+	correspondant à cet indice à ma randomList. Quand j'ai parcouru tous mes indices,
+	je les décales de 1 et je répète l'opération.
+4)myRandom()
+	-Je crée un nombre random compris entre [0,1[
+	-je crée une randomList(17) de taille 17 pour la précision des float.
+	-Je parcours ma randomList et je convertit mes int en str.
+	-Ensuite je concatène mes str ensemble pour former un nombre sous forme de str.
+	-Je convertis ce nombre en float et je le divise par 10^17 pour le mettre dans
+	l'intervalle [0,1[.
+
+problème:
+ne pas utiliser une boucle et créer un nombre random dedans car le seed sera le meme.
+Car seed est fonction du temps, et pendant l'iteration d'une boucle, le tmeps ne change pas
+car programme trop rapide.
