@@ -7,9 +7,11 @@ pour avoir un tableau de 10 indices entre 0 et 999999.
 
 3)randomIntList(n)
 	-Je crée une liste de n nombres random entre 0 et 9
-	-J'ai mes 10 indices, pour chaque indices, j'ajoute la décimale de pi
-	correspondant à cet indice à ma randomList. Quand j'ai parcouru tous mes indices,
-	je les décales de 1 et je répète l'opération.
+	-J'ai 1 indice, pour chaque n, j'ajoute la décimale de pi
+	correspondant à cet indice à ma randomList. Puis je prend une autre décimale
+	avec un décalage de 42 par rapport à l'indice précédent.
+	-Pour des grands n, je change de seed toute les 1000 opérations pour éviter
+	d'avoir des cycles.
 4)myRandom()
 	-Je crée un nombre random compris entre [0,1[
 	-je crée une randomList(17) de taille 17 pour la précision des float.
