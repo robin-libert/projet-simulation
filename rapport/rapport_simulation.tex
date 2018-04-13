@@ -5,6 +5,8 @@
 \usepackage[francais]{babel}
 \usepackage{graphicx}
 \usepackage{fancyhdr}
+\usepackage{listings}
+\lstset{language=Python}
 
 \title{Simulation\\Projet d'examen:\\Étude du caractère pseudo-aléatoire de $\pi$}
 \author{Libert Robin BA3 Info\\Umons}
@@ -24,37 +26,9 @@
 
 \section{Énoncé}
 
-Il nous a été demandé d'étudier le caractère pseudo-aléatoire des décimales de $\pi$. Pour ce faire, nous allons utiliser des tests vus au cours dans le but de savoir si les décimales de $\pi$ suivent une loi uniforme ou non.\par
+Dans le cadre du projet du cours de Simulation, dispensé par Monsieur Alain BUYS, il nous a été demandé d'étudier le caractère pseudo-aléatoire des décimales de $\pi$. Pour ce faire, nous allons utiliser des tests vus au cours dans le but de savoir si les décimales de $\pi$ suivent une loi uniforme ou non.\par
 
 Dans un second temps, nous devons utiliser les décimales de $\pi$ pour créer un générateur de loi uniforme [0,1[ et le comparer au générateur par défaut de Python. 
-
-
-
-\begin{center}
-		\begin{tabular}{|c|c|c|c|}
-				\hline
-				100&51.4833&48.8686&54.0128\\
-				\hline
-				100&52.9167&52.8934&55.0888\\
-				\hline
-				100&51.5604&51.4268&50.1593\\
-				\hline
-				100&49.4558&51.5149&49.0166\\
-				\hline
-				100&49.8615&50.1993&46.7038\\
-				\hline
-				100&53.6345&52.2414&49.2623\\
-				\hline
-				100&47.8990&51.3192&49.4790\\
-				\hline
-				100&52.1283&49.6891&51.2927\\
-				\hline
-				100&50.1619&50.2381&48.3551\\
-				\hline
-				100&50.0998&51.5260&56.2141\\
-				\hline	
-		\end{tabular}
-\end{center}
 
 \section{Logiciels utilisés}
 \begin{itemize}
@@ -67,6 +41,187 @@ Dans un second temps, nous devons utiliser les décimales de $\pi$ pour créer un 
 
 \chapter{Intuitions}
 
+Pour nous donner une première intuition, nous avons créé un diagramme à batons comptant le nombre de fois que chaque digit de $\pi$ apparaît dans le premier million de décimales de $\pi$. En théorie, vu que nous considérons 10 digits allant de 0 à 9, une loi uniforme devrait compter 100000 occurences de chaque digit, vu que nous considérons 1 million de décimales.\par
 
-\chapter{Étudier le caractère pseudo aléatoire des décimales de pi}
+Voici un aperçu de notre diagramme à baton. Chaque digit semble bien apparaître 100000 fois et donc, les décimales de $\pi$ semblent suivre une loi normale.
+\begin{figure}[h]
+	\centering
+		\includegraphics[width=0.80\textwidth]{C:/Users/USER/Documents/GitHub/projet-simulation/rapport/img/hist_pi_digits_occurrences.png}
+	\label{fig:hist_pi_digits_occurrences}
+\end{figure}
+
+
+Faisons un zoom sur les valeurs critiques du diagramme. Nous constatons ci-dessous que les digits n'apparaissent pas 100000 fois. Ce n'est pas pour autant que les décimales de $\pi$ ne suivent pas une loi uniforme. En théorie, ce serais le cas si nous avions et pouvions observer une infinité de décimale, mais comme ce n'est pas le cas, il est normal d'avoir une erreur. Nous allons donc devoir vérifier avec différents tests, si cette erreur est significative ou pas en fonction du nombre de décimales que nous avons à notre disposition.
+\begin{figure}[h]
+	\centering
+		\includegraphics[width=0.80\textwidth]{C:/Users/USER/Documents/GitHub/projet-simulation/rapport/img/hist_pi_digits_occurrences_zoom.png}
+	\label{fig:hist_pi_digits_occurrences_zoom}
+\end{figure}
+
+En mettant les valeurs dans un tableau et calculant le pourcentage d'erreur relative, nous constatons que les résultats expérimentaux de diffèrent jamais de plus de 0.5\% des résultats théoriques.
+\begin{center}
+		\begin{tabular}{|c|c|c|c|}
+				\hline
+				Digit&Théorie&Expérimentaux&Erreur relative \%\\
+				\hline
+				0&100000&99959&0.041 \\
+				\hline
+				1&100000&99758&0.242 \\
+				\hline
+				2&100000&100026&0.026 \\
+				\hline
+				3&100000&100229&0.229 \\
+				\hline
+				4&100000&100230&0.230 \\
+				\hline
+				5&100000&100359&0.359 \\
+				\hline
+				6&100000&99548&0.452 \\
+				\hline
+				7&100000&99800&0.200 \\
+				\hline
+				8&100000&99985&0.015 \\
+				\hline
+				9&100000&100106&0.106 \\
+				\hline	
+		\end{tabular}
+\end{center}
+
+En résumé, les résultats préliminaires tendent à nous faire penser que les décimales de $\pi$ suivent une loi uniforme, du moins pour le premier million.
+Dans le chapitre suivant, nous allons tenter de prouver que le premier million de décimales de $\pi$ suivent bien une loi uniforme. Nous allons utiliser 3 tests différents, le test de $\chi^2$, le test du Gap et le test de la main de Poker.
+
+\chapter{Tester le caractère pseudo-aléatoire de 1 million de décimales de $\pi$}
+
+\section{Test de $\chi^2$ avec 9 ddl}
+
+\subsection{Rappel théorique}
+Dans le test de $\chi^2$, nous devons créer un histogramme de r intervalles et compter le nombre de valeurs générées dans chaque intervalle $n_i$. Dans chaque intervalle, on s'attend à avoir à peu près le même nombre de points car les probabilités $p_i$ sont égales.\par
+
+Dans un premier temps, nous devons calculer $K_n = \sum\limits_{i=1}^r \left(\frac{n_i-Np_i}{\sqrt{Np_i}}\right)^2$. Ensuite nous devons comparer $K_n$ et $\chi^2$ pour un certain $\alpha$, qui est la probabilité de rejeter l'hypothèse nulle $H_0$ et un certain degré de liberté qui vaut $r-1$. Nous retenons notre hypothèse nulle si $K_n \leq \chi^2$ et nous la rejetons sinon.
+
+\subsection{Résultats et implémentation}
+Rapportons le test de $\chi^2$ à notre problème.\par
+
+r est le nombre d'événements distincts et vaut 10\par
+$n_i$ est le nombre d'occurrences observées de l'événement i\par
+N est la taille de l'échantillon et vaut 1000000\par
+$p_i$ est la probabilité d'obtenir l'événement i et vaut $\frac{1}{10}$\par
+Cette première fonction prend en paramètre la liste des décimales de $\pi$. Elle retourne la liste du nombre d'occurrence de chaque digit de 0 à 9 dans les décimales de $\pi$. Le nombre de fois qu'apparaît 0 dans les décimales de $\pi$ est le nombre se trouvant à l'indice 0 de la liste.
+
+\begin{lstlisting}[frame=single]
+def countOccurences(l):
+    n_occurences = [0,0,0,0,0,0,0,0,0,0]
+    for n in range(len(l)):
+        n_occurences[l[n]] += 1
+    return n_occurences
+\end{lstlisting}
+
+Cette fonction va prendre en paramètres la liste retournée par la fonction countOccurences appliquée sur les décimales de $\pi$ et retournera la valeur de $K_n$ avec comme probabilité $\frac{1}{10}$.
+
+\begin{lstlisting}[frame=single]
+def khi2(listReal):
+    sizeEch = 0
+    for e in listReal:
+        sizeEch += e
+    Kn = 0
+    for i in range(10):
+        p = sizeEch*1/10
+        Kn += ((listReal[i] - p) / math.sqrt(p))**2
+    return Kn
+\end{lstlisting}
+
+\begin{center}
+		\begin{tabular}{|c|c|c|c|}
+				\hline
+				$\alpha$&$K_n$&$\chi^2$&$K_n \leq \chi^2$\\
+				\hline
+				0.001&5.51&27.88&True\\
+				\hline
+				0.05&5.51&16.92&True\\
+				\hline
+				0.1&5.51&14.68&True\\
+				\hline	
+		\end{tabular}
+\end{center}
+
+\section{Test du Gap avec 49 ddl}
+
+\begin{center}
+		\begin{tabular}{|c|c|c|c|c|}
+				\hline
+				Numéro&$\alpha$&$K_n$&$\chi^2$&$K_n \leq \chi^2$\\
+				\hline
+				1&0.001&49.99&85.35&True\\
+				\hline
+				1&0.05&49.99&66.34&True\\
+				\hline
+				1&0.1&49.99&62.04&True\\
+				\hline
+				2&0.001&36.34&85.35&True\\
+				\hline
+				2&0.05&36.34&66.34&True\\
+				\hline
+				2&0.1&36.34&62.04&True\\
+				\hline
+				3&0.001&37.81&85.35&True\\
+				\hline
+				3&0.05&37.81&66.34&True\\
+				\hline
+				3&0.1&37.81&62.04&True\\
+				\hline	
+				4&0.001&72.07&85.35&True\\
+				\hline
+				4&0.05&72.07&66.34&False\\
+				\hline
+				4&0.1&72.07&62.04&False\\
+				\hline	
+				5&0.001&54.14&85.35&True\\
+				\hline
+				5&0.05&54.14&66.34&True\\
+				\hline
+				5&0.1&54.14&62.04&True\\
+				\hline	
+				6&0.001&47.72&85.35&True\\
+				\hline
+				6&0.05&47.72&66.34&True\\
+				\hline
+				6&0.1&47.72&62.04&True\\
+				\hline	
+				7&0.001&44.87&85.35&True\\
+				\hline
+				7&0.05&44.87&66.34&True\\
+				\hline
+				7&0.1&44.87&62.04&True\\
+				\hline	
+				8&0.001&38.03&85.35&True\\
+				\hline
+				8&0.05&38.03&66.34&True\\
+				\hline
+				8&0.1&38.03&62.04&True\\
+				\hline	
+				9&0.001&36.10&85.35&True\\
+				\hline
+				9&0.05&36.10&66.34&True\\
+				\hline
+				9&0.1&36.10&62.04&True\\
+				\hline	
+		\end{tabular}
+\end{center}
+
+\section{Test du Poker avec 4 ddl}
+
+\begin{center}
+		\begin{tabular}{|c|c|c|c|}
+				\hline
+				$\alpha$&$K_n$&$\chi^2$&$K_n \leq \chi^2$\\
+				\hline
+				0.001&4.61&18.47&True\\
+				\hline
+				0.05&4.61&9.49&True\\
+				\hline
+				0.1&4.61&7.78&True\\
+				\hline	
+		\end{tabular}
+\end{center}
+
 \end{document}

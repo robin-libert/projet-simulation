@@ -56,7 +56,7 @@ def pokerList(randomNumberList):
 
 """
 The parameter is the list of the number of occurrences of each events.
-Return Kn of khi2
+Return Kn of khi2 and we have to look khi2 with 9 ddl
 """
 def khi2(listReal):
     sizeEch = 0
@@ -67,7 +67,10 @@ def khi2(listReal):
         p = sizeEch*1/10
         Kn += ((listReal[i] - p) / math.sqrt(p))**2
     return Kn
-    
+
+"""
+return Kn of khi 2 and we have to look khi2 with 49 ddl
+""" 
 def khi2Gap(listReal):
     sizeEch = 0
     for e in range(50):
@@ -78,6 +81,9 @@ def khi2Gap(listReal):
         Kn += ((listReal[i] - p) / math.sqrt(p))**2
     return Kn
 
+"""
+return Kn of khi 2 and we have to look khi2 with 4 ddl
+""" 
 def khi2Poker(listReal):
     sizeEch = 0
     for e in range(5):
@@ -125,13 +131,13 @@ def stirling(n,k):
     
 if(__name__ == "__main__"):
     r = r.randomIntList(1000000)
-    pi = pi_decimals[0:100000]
+    pi = pi_decimals
     python = []
     for i in range(1000000):
         python.append(random.randint(0,9))
 
     listPoker = pokerList(pi)
-    listGap = gapList(pi,3)
+    listGap = gapList(pi,9)
     listSimple = pa.countOccurences(pi)
     
     print(khi2(listSimple))

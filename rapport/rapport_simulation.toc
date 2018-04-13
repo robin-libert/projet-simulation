@@ -3,4 +3,9 @@
 \contentsline {section}{\numberline {1.1}\'Enonc\'e}{2}
 \contentsline {section}{\numberline {1.2}Logiciels utilis\'es}{2}
 \contentsline {chapter}{\numberline {2}Intuitions}{3}
-\contentsline {chapter}{\numberline {3}\'Etudier le caract\`ere pseudo al\'eatoire des d\'ecimales de pi}{4}
+\contentsline {chapter}{\numberline {3}Tester le caract\`ere pseudo-al\'eatoire de 1 million de d\'ecimales de $\pi $}{5}
+\contentsline {section}{\numberline {3.1}Test de $\chi ^2$ avec 9 ddl}{5}
+\contentsline {subsection}{\numberline {3.1.1}Rappel th\'eorique}{5}
+\contentsline {subsection}{\numberline {3.1.2}R\'esultats et impl\'ementation}{5}
+\contentsline {section}{\numberline {3.2}Test du Gap avec 49 ddl}{7}
+\contentsline {section}{\numberline {3.3}Test du Poker avec 4 ddl}{7}

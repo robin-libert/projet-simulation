@@ -54,33 +54,33 @@ def rel_error():
     err = []
     for e in range(len(occurences)):
         err.append(float("%.3f" % math.fabs((occurences[e]/1000)-100)))#limit the floats to 3 decimals
-    #np.savetxt("data/err.txt", err, delimiter=' & ', fmt='%.3f', newline=' \\\\\n')
+    np.savetxt("data/err.txt", err, delimiter=' & ', fmt='%.3f', newline=' \\\\\n')
     return err
     
 def hist_pi_decimals():
-    plt.title('Nombre d\'occurences de 0...9 dans\n le premier million de décimales de PI')
-    plt.xlabel("Valeur du nombre que l'on compte")
-    plt.ylabel("Nombre d'occurences")
+    plt.title('Nombre d\'occurrences de 0...9 dans\n le premier million de décimales de PI')
+    plt.xlabel("Décimale de pi")
+    plt.ylabel("Nombre d'occurrence")
     x = [0,1,2,3,4,5,6,7,8,9]
     y = countOccurences(pi_decimals)
     plt.bar(x,y)
     plt.tight_layout()
-    #plt.savefig("data/hist_pi_digits_occurences.png", pad_inches=0)
+    plt.savefig("data/hist_pi_digits_occurrences.png", pad_inches=0)
     plt.show()
     
 def hist_pi_decimals_zoom():
-    plt.title('Nombre d\'occurences de 0...9 dans\n le premier million de décimales de PI\n Zoom sur les valeurs critique')
-    plt.xlabel("Valeur du nombre que l'on compte")
-    plt.ylabel("Nombre d'occurences")
+    plt.title('Nombre d\'occurrences de 0...9 dans\n le premier million de décimales de PI\n Zoom sur les valeurs critique')
+    plt.xlabel("Décimale de pi")
+    plt.ylabel("Nombre d'occurrence")
     x = [0,1,2,3,4,5,6,7,8,9]
     y = countOccurences(pi_decimals)
     plt.axis([-1,10,99000,101000])
     plt.bar(x,y)
     plt.tight_layout()
-    #plt.savefig("data/hist_pi_digits_occurences_zoom.png", pad_inches=0)
+    plt.savefig("data/hist_pi_digits_occurrences_zoom.png", pad_inches=0)
     plt.show()
     
 if(__name__ == "__main__"):
-    test = [[1,2,3],[4,5,6],[7,8,9]]
+    print(countOccurences(pi_decimals))
 #    np.savetxt("data/test.txt", test, delimiter=' & ', fmt='%.3f', newline=' \\\\\n')
     
