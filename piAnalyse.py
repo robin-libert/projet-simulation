@@ -82,5 +82,5 @@ def hist_pi_decimals_zoom():
     
 if(__name__ == "__main__"):
     test = [[1,2,3],[4,5,6],[7,8,9]]
-    np.savetxt("data/test.txt", test, delimiter=' & ', fmt='%.3f', newline=' \\\\\n')
+#    np.savetxt("data/test.txt", test, delimiter=' & ', fmt='%.3f', newline=' \\\\\n')
     

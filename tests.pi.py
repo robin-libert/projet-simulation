@@ -7,6 +7,7 @@ Created on Tue Apr 10 16:05:24 2018
 import piAnalyse as pa
 import piRandom as r
 import math
+import random
 
 pi_decimals = pa.pi_decimals
 
@@ -37,16 +38,19 @@ def pokerList(randomNumberList):
     pokerList = [0]*5
     c = 0
     nOccurences = [0]*10
+    n=0
     for e in randomNumberList:
         if c < 5:
            nOccurences[e] += 1
         if c == 4:
-           maxi = max(nOccurences)
-           pokerList[maxi-1] += 1
+           for i in nOccurences:
+               if i != 0:
+                   n += 1
+           pokerList[n-1] += 1
+           n = 0
            c = -1
            nOccurences = [0]*10
         c += 1
-    pokerList.reverse()
     return pokerList
     
 
@@ -54,24 +58,24 @@ def pokerList(randomNumberList):
 The parameter is the list of the number of occurrences of each events.
 Return Kn of khi2
 """
-def khi2(listReal,r):
+def khi2(listReal):
     sizeEch = 0
     for e in listReal:
         sizeEch += e
     Kn = 0
-    for i in range(r):
+    for i in range(10):
         p = sizeEch*1/10
         Kn += ((listReal[i] - p) / math.sqrt(p))**2
     return Kn
     
-def khi2Gap(listReal,r):
+def khi2Gap(listReal):
     sizeEch = 0
-    for e in range(r):
+    for e in range(50):
         sizeEch += listReal[e]
     Kn = 0
-    for i in range(r):
+    for i in range(50):
         p = sizeEch*((1/10)*((9/10)**i))
-        Kn += ((listReal[i] - p) / math.sqrt(sizeEch * p))**2
+        Kn += ((listReal[i] - p) / math.sqrt(p))**2
     return Kn
 
 def khi2Poker(listReal):
@@ -86,8 +90,7 @@ def khi2Poker(listReal):
             p = p * (10+c)
             c -= 1
         p = p / 10**5
-        print(p*200000)
-        Kn += ((listReal[i] - p) / math.sqrt(sizeEch * p))**2
+        Kn += ((listReal[i] - (sizeEch*p)) / math.sqrt(sizeEch * p))**2
     return Kn
 
 """
@@ -122,12 +125,15 @@ def stirling(n,k):
     
 if(__name__ == "__main__"):
     r = r.randomIntList(1000000)
-    pi = pi_decimals
-#    g = gapList(r,3)
-    p = pokerList(pi)
-    print(p)
-    print(khi2Poker(p))
-#    listReal = pa.countOccurences(r)
-#    print(khi2(listReal,10))
-#    print(pa.countOccurences(r))
-#    print(khi2Gap(g,50))
+    pi = pi_decimals[0:100000]
+    python = []
+    for i in range(1000000):
+        python.append(random.randint(0,9))
+
+    listPoker = pokerList(pi)
+    listGap = gapList(pi,3)
+    listSimple = pa.countOccurences(pi)
+    
+    print(khi2(listSimple))
+    print(khi2Gap(listGap))
+    print(khi2Poker(listPoker))

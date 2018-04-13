@@ -3,4 +3,4 @@
 \contentsline {section}{\numberline {1.1}\'Enonc\'e}{2}
 \contentsline {section}{\numberline {1.2}Logiciels utilis\'es}{2}
 \contentsline {chapter}{\numberline {2}Intuitions}{3}
-\contentsline {section}{\numberline {2.1}Premi\`ere analyse des donn\'ees}{3}
+\contentsline {chapter}{\numberline {3}\'Etudier le caract\`ere pseudo al\'eatoire des d\'ecimales de pi}{4}
