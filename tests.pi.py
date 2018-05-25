@@ -5,23 +5,22 @@ Created on Tue Apr 10 16:05:24 2018
 @author: Robin Libert
 """
 import piAnalyse as pa
-import piRandom as r
+import piRandom as r1
 import math
-import random
 
 pi_decimals = pa.pi_decimals
 
 """
 Return the occurrences of gap of size >= index+1 associate to digit n
-The limit size of a gap is set to 100.
+The limit size of a gap is set to 1000.
 """
 def gapList(randomNumberList, n):
-    gapList = [0]*100
+    gapList = [0]*1000
     gap = 1
     begin = False
     for e in randomNumberList:
         if begin == True and e == n:
-            if(gap <= 100):
+            if(gap <= len(gapList)):
                 gapList[gap-1] += 1
             gap = 1
         elif begin == False and e == n:
@@ -73,10 +72,11 @@ return Kn of khi 2 and we have to look khi2 with 49 ddl
 """ 
 def khi2Gap(listReal):
     sizeEch = 0
-    for e in range(50):
+    gapsize = 50
+    for e in range(1000):
         sizeEch += listReal[e]
     Kn = 0
-    for i in range(50):
+    for i in range(gapsize):
         p = sizeEch*((1/10)*((9/10)**i))
         Kn += ((listReal[i] - p) / math.sqrt(p))**2
     return Kn
@@ -130,16 +130,38 @@ def stirling(n,k):
         return (k1*(stirling(n1-1,k1)))+stirling(n1-1,k1-1)
     
 if(__name__ == "__main__"):
-    r = r.randomIntList(1000000)
-    pi = pi_decimals
-    python = []
-    for i in range(1000000):
-        python.append(random.randint(0,9))
+    r = r1.randomIntList(1000000)
+#    r = pi_decimals
+#    r = []
+#    for i in range(5000000):
+#        r.append(random.randint(0,9))
 
-    listPoker = pokerList(pi)
-    listGap = gapList(pi,9)
-    listSimple = pa.countOccurences(pi)
+
+    listPoker = pokerList(r)
+    
+    listGap0 = gapList(r,0)
+    listGap1 = gapList(r,1)
+    listGap2 = gapList(r,2)
+    listGap3 = gapList(r,3)
+    listGap4 = gapList(r,4)
+    listGap5 = gapList(r,5)
+    listGap6 = gapList(r,6)
+    listGap7 = gapList(r,7)
+    listGap8 = gapList(r,8)
+    listGap9 = gapList(r,9)
+    
+    listSimple = pa.countOccurences(r)
     
     print(khi2(listSimple))
-    print(khi2Gap(listGap))
     print(khi2Poker(listPoker))
+    print(khi2Gap(listGap0))
+    print(khi2Gap(listGap1))
+    print(khi2Gap(listGap2))
+    print(khi2Gap(listGap3))
+    print(khi2Gap(listGap4))
+    print(khi2Gap(listGap5))
+    print(khi2Gap(listGap6))
+    print(khi2Gap(listGap7))
+    print(khi2Gap(listGap8))
+    print(khi2Gap(listGap9))
+    

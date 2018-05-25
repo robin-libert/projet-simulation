@@ -7,5 +7,17 @@
 \contentsline {section}{\numberline {3.1}Test de $\chi ^2$ avec 9 ddl}{5}
 \contentsline {subsection}{\numberline {3.1.1}Rappel th\'eorique}{5}
 \contentsline {subsection}{\numberline {3.1.2}R\'esultats et impl\'ementation}{5}
-\contentsline {section}{\numberline {3.2}Test du Gap avec 49 ddl}{7}
-\contentsline {section}{\numberline {3.3}Test du Poker avec 4 ddl}{7}
+\contentsline {section}{\numberline {3.2}Test du Gap avec 49 ddl}{6}
+\contentsline {subsection}{\numberline {3.2.1}Rappel th\'eorique}{6}
+\contentsline {subsection}{\numberline {3.2.2}R\'esultats et impl\'ementation}{7}
+\contentsline {section}{\numberline {3.3}Test du Poker avec 4 ddl}{8}
+\contentsline {subsection}{\numberline {3.3.1}Rappel th\'eorique}{8}
+\contentsline {subsection}{\numberline {3.3.2}R\'esultats et impl\'ementation}{8}
+\contentsline {section}{\numberline {3.4}Conclusion}{10}
+\contentsline {chapter}{\numberline {4}Comparer notre g\'en\'erateur de loi uniforme \`a celui de python}{11}
+\contentsline {section}{\numberline {4.1}Fonctionnement de notre g\'en\'erateur de loi uniforme}{11}
+\contentsline {section}{\numberline {4.2}Intuition}{13}
+\contentsline {section}{\numberline {4.3}Test de $\chi ^2$ avec 9 ddl}{14}
+\contentsline {section}{\numberline {4.4}Test du Gap avec 49 ddl}{15}
+\contentsline {section}{\numberline {4.5}Test du Poker avec 4 ddl}{17}
+\contentsline {section}{\numberline {4.6}Conclusion}{17}
